@@ -1,34 +1,41 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Santalarch Architectural Warm Stone & Linen Palette (Zero Cold Black) */
+  --ground: #FAF7F2;          /* Warm limestone / unbleached vellum canvas */
+  --ground-subtle: #F3ECE2;   /* Soft warm sandstone tint */
+  --ground-elevated: #FFFFFF; /* Crisp architectural white for presentation plates */
+  --ground-card: #F7F3EC;     /* Warm alabaster */
+  
+  /* Ink & Typography Colors */
+  --ink: #1B1917;             /* Deep roasted espresso slate (warm, crisp, never dead #000) */
+  --ink-secondary: #57524C;   /* Warm neutral industrial concrete taupe */
+  --muted: #827A71;           /* Warm architectural sandstone */
+  --muted-light: #C2B8AC;     /* Fine chalk rule */
+  
+  /* Hairline Structural Rules (Santalarch drafting line style) */
+  --line: rgba(27, 25, 23, 0.12);
+  --line-strong: rgba(27, 25, 23, 0.22);
+  
+  /* Accents */
+  --accent: #B85827;          /* Warm architectural terracotta clay */
+  --accent-hover: #964219;    /* Deep baked terracotta */
+  --accent-light: #FCE8D8;    /* Soft warm terracotta wash */
+  --accent-subtle: #FFF7F0;   /* Pale sunlit linen */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  /* Swiss Neo-Grotesk Typography (Santalarch aesthetic: Helvetica / Plus Jakarta Sans) */
+  --font-sans: var(--font-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-serif: var(--font-serif), "Cormorant Garamond", Georgia, serif;
 
-html {
-  height: 100%;
-}
+  /* Monumental Scale */
+  --t-santal-hero: clamp(3.2rem, 1.8rem + 6.8vw, 8.4rem);
+  --t-santal-display: clamp(2.4rem, 1.4rem + 4vw, 5rem);
+  --t-santal-h2: clamp(1.8rem, 1.2rem + 2.4vw, 3.4rem);
+  --t-santal-h3: clamp(1.2rem, 0.95rem + 0.9vw, 1.8rem);
+  --t-santal-body: clamp(1.02rem, 0.96rem + 0.2vw, 1.15rem);
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Geometry & Rules */
+  --max-w: 1440px;
+  --gutter: clamp(24px, 4.5vw, 64px);
+  --radius: 0px; /* Santalarch uses crisp, unrounded architectural edges */
 }
 
 * {
@@ -37,13 +44,1186 @@ body {
   margin: 0;
 }
 
+html {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background-color: var(--ground);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ground);
+  background-image: 
+    radial-gradient(rgba(27, 25, 23, 0.04) 1px, transparent 0),
+    linear-gradient(to bottom, rgba(243, 236, 226, 0.3) 0%, transparent 600px);
+  background-size: 24px 24px, 100% 100%;
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--accent-light);
+  color: var(--accent-hover);
+}
+
+main {
+  flex: 1;
+}
+
+/* Image zoom on hover */
+.santal-hero-frame img {
+  transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.santal-hero-frame:hover img {
+  transform: scale(1.03);
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Santal Container */
+.santal-container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Awwwards Double-Span Letter Roll */
+.roll {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+  line-height: 1.2;
+  height: 1.2em;
+  position: relative;
+}
+
+.roll > span {
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+  line-height: 1.2;
+}
+
+.roll > span + span {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+}
+
+@media (hover: hover) {
+  .roll:hover > span,
+  a:hover > .roll > span,
+  a:hover.roll > span {
+    transform: translateY(-100%);
+  }
+}
+
+.roll:focus-visible > span,
+a:focus-visible > .roll > span,
+a:focus-visible.roll > span {
+  transform: translateY(-100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roll > span {
+    transition: none;
+    translate: none !important;
+  }
+  .roll > span + span {
+    visibility: hidden;
+  }
+  .roll:focus-visible,
+  .roll:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}
+
+/* Live Telemetry Pulse Dot */
+.santal-live-pulse {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #22C55E;
+  box-shadow: 0 0 0 rgba(34, 197, 94, 0.4);
+  animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(34, 197, 94, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+/* Santal Live Ticker Bar */
+.santal-live-ticker {
+  background-color: var(--ground-subtle);
+  border-bottom: 1px solid var(--line);
+  padding: 8px var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  overflow-x: auto;
+}
+
+.santal-ticker-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.santal-ticker-label {
+  color: var(--muted-light);
+}
+
+.santal-ticker-val {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Santal Fixed Minimal Header */
+.santal-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(251, 249, 245, 0.94);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.santal-header-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 18px var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.santal-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+.santal-brand-dot {
+  opacity: 0.4;
+  color: var(--accent);
+}
+
+.santal-brand-sub {
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.santal-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.santal-nav-link {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--ink-secondary);
+  letter-spacing: 0.02em;
+  padding: 6px 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.santal-nav-link:hover {
+  color: var(--ink);
+}
+
+.santal-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.santal-call-link {
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--muted);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.santal-call-link:hover {
+  color: var(--ink);
+}
+
+.santal-btn-enquire {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  padding: 9px 18px;
+  min-height: 40px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.santal-btn-enquire:hover {
+  background-color: var(--ink);
+  color: #FFFFFF;
+  border-color: var(--ink);
+}
+
+/* Santal Mobile Burger Button */
+.santal-burger-btn {
+  display: none;
+  background: none;
+  border: 1px solid var(--line-strong);
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.santal-burger-btn:hover {
+  background-color: var(--ground-subtle);
+}
+
+.santal-burger-line {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background-color: var(--ink);
+  transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.2s ease;
+}
+
+.santal-burger-line.open:nth-child(1) {
+  transform: translateY(3.75px) rotate(45deg);
+}
+
+.santal-burger-line.open:nth-child(2) {
+  transform: translateY(-3.75px) rotate(-45deg);
+}
+
+/* Santal Mobile Drawer */
+.santal-mobile-drawer {
+  position: fixed;
+  top: 61px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--ground);
+  z-index: 99;
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.3s ease, visibility 0.4s ease;
+  overflow-y: auto;
+  border-bottom: 1px solid var(--line);
+}
+
+.santal-mobile-drawer.open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.santal-drawer-inner {
+  padding: 32px var(--gutter) 48px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 61px);
+}
+
+.santal-drawer-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 24px;
+}
+
+.santal-drawer-nav {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.santal-drawer-link {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.santal-drawer-link:hover {
+  color: var(--accent);
+  padding-left: 8px;
+}
+
+.santal-drawer-num {
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  font-weight: 600;
+  min-width: 24px;
+}
+
+.santal-drawer-footer {
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.santal-drawer-label {
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.santal-drawer-contact-val {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+/* Santal Hero Stage */
+.santal-hero-section {
+  padding: clamp(64px, 8vw, 110px) 0 clamp(44px, 5vw, 76px);
+  border-bottom: 1px solid var(--line);
+}
+
+.santal-hero-eyebrow {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+  display: block;
+}
+
+.santal-hero-title {
+  font-size: var(--t-santal-hero);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  color: var(--ink);
+  margin-bottom: 32px;
+}
+
+.santal-hero-title span {
+  display: block;
+}
+
+.santal-hero-subtitle-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 80px);
+  margin-bottom: clamp(36px, 5vw, 64px);
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  align-items: start;
+}
+
+.santal-hero-tagline {
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2.2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.santal-hero-desc {
+  font-size: clamp(1rem, 0.95rem + 0.2vw, 1.14rem);
+  color: var(--ink-secondary);
+  line-height: 1.75;
+}
+
+.santal-hero-meta-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.santal-hero-frame {
+  position: relative;
+  width: 100%;
+  height: clamp(420px, 45vw, 720px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  outline: 1px solid rgba(27, 25, 23, 0.08);
+  outline-offset: -1px;
+}
+
+.santal-hero-plaque {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: clamp(20px, 3vw, 36px);
+  background: linear-gradient(to top, rgba(27, 25, 23, 0.92) 0%, transparent 100%);
+  color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.santal-plaque-title {
+  font-size: clamp(1.1rem, 0.9rem + 0.8vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.santal-plaque-meta {
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* Santal Three Tenets (Triptych Grid) */
+.santal-tenets-section {
+  border-bottom: 1px solid var(--line);
+}
+
+.santal-tenets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.santal-tenet-col {
+  padding: clamp(48px, 6vw, 84px) clamp(24px, 3vw, 44px);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+}
+
+.santal-tenet-col:last-child {
+  border-right: none;
+}
+
+.santal-tenet-num {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.santal-tenet-title {
+  font-size: clamp(1.8rem, 1.2rem + 1.8vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1.05;
+  margin-bottom: 18px;
+}
+
+.santal-tenet-p {
+  font-size: 1.02rem;
+  color: var(--ink-secondary);
+  line-height: 1.7;
+}
+
+/* Santal Philosophy / 4 Cornerstones */
+.santal-section {
+  padding: clamp(64px, 8vw, 120px) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.santal-approach-header {
+  margin-bottom: clamp(48px, 6vw, 80px);
+}
+
+.santal-approach-eyebrow {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.santal-approach-statement {
+  font-size: clamp(1.8rem, 1.2rem + 2.4vw, 3.8rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  color: var(--ink);
+  max-width: 960px;
+  margin-bottom: 18px;
+}
+
+.santal-approach-sub {
+  font-size: clamp(1.05rem, 0.98rem + 0.3vw, 1.3rem);
+  color: var(--ink-secondary);
+  max-width: 760px;
+}
+
+.santal-cornerstones-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.santal-cornerstone-cell {
+  padding: clamp(36px, 4.5vw, 60px);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.25s ease;
+}
+
+.santal-cornerstone-cell:hover,
+.santal-tenet-col:hover {
+  background-color: rgba(184, 88, 39, 0.02);
+}
+
+.santal-cornerstone-cell svg,
+.santal-tenet-col svg {
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.3s ease;
+  opacity: 0.85;
+}
+
+.santal-cornerstone-cell:hover svg,
+.santal-tenet-col:hover svg {
+  transform: translateY(-3px) scale(1.05);
+  opacity: 1;
+}
+
+.santal-cornerstone-index {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.santal-cornerstone-title {
+  font-size: clamp(1.4rem, 1.1rem + 1vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.santal-cornerstone-p {
+  font-size: 1.02rem;
+  color: var(--ink-secondary);
+  line-height: 1.75;
+}
+
+/* SIGNATURE AWWWARDS INTERACTION: Floating Project Ledger */
+.santal-works-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: clamp(40px, 5vw, 64px);
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.santal-works-eyebrow {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.santal-works-title {
+  font-size: var(--t-santal-h2);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.santal-works-ledger {
+  position: relative;
+  width: 100%;
+  border-top: 1px solid var(--line);
+}
+
+.santal-ledger-header {
+  display: grid;
+  grid-template-columns: 80px 1.4fr 1fr 100px 80px;
+  gap: 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.santal-ledger-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.santal-ledger-row {
+  display: grid;
+  grid-template-columns: 80px 1.4fr 1fr 100px 80px;
+  gap: 24px;
+  padding: clamp(28px, 3.5vw, 44px) 0;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+  transition: padding-left 0.25s cubic-bezier(0.165, 0.84, 0.44, 1), background-color 0.2s ease;
+  position: relative;
+}
+
+.santal-ledger-row:hover {
+  padding-left: 16px;
+  background-color: rgba(184, 88, 39, 0.03);
+}
+
+.santal-row-num {
+  font-size: 0.88rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.santal-row-name {
+  font-size: clamp(1.4rem, 1.1rem + 1vw, 2.2rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1.15;
+}
+
+.santal-row-spec {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.santal-row-loc {
+  font-size: 0.95rem;
+  color: var(--ink-secondary);
+}
+
+.santal-row-year {
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.santal-arrow-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line-strong);
+  font-size: 1.1rem;
+  color: var(--ink);
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.santal-ledger-row:hover .santal-arrow-chip {
+  transform: translate(2px, -2px);
+  background-color: var(--ink);
+  color: #FFFFFF;
+}
+
+/* Floating Magnetic Image Preview (Awwwards Follower) */
+.santal-cursor-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 360px;
+  height: 240px;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0;
+  scale: 0.92;
+  transition: opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), scale 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 16px 36px rgba(27, 25, 23, 0.16);
+  border: 1px solid var(--line-strong);
+  overflow: hidden;
+  outline: 1px solid rgba(27, 25, 23, 0.1);
+  outline-offset: -1px;
+}
+
+.santal-cursor-preview.visible {
+  opacity: 1;
+  scale: 1;
+}
+
+.santal-preview-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.santal-preview-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 14px;
+  background: linear-gradient(to top, rgba(27, 25, 23, 0.9) 0%, transparent 100%);
+  color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Santal Services ("What We Do") */
+.santal-services-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: clamp(40px, 6vw, 90px);
+  align-items: start;
+}
+
+.santal-services-bigtitle {
+  font-size: clamp(3rem, 1.8rem + 4.5vw, 6.5rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.94;
+  color: var(--ink);
+  position: sticky;
+  top: 100px;
+}
+
+.santal-services-bigtitle span {
+  display: block;
+}
+
+.santal-services-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+
+.santal-service-item {
+  padding: clamp(32px, 4vw, 48px) 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+}
+
+.santal-service-num {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.santal-service-title {
+  font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.4rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+.santal-service-p {
+  font-size: 1.02rem;
+  color: var(--ink-secondary);
+  line-height: 1.7;
+}
+
+/* Santal Process (6-Stage Framework) */
+.santal-process-header {
+  margin-bottom: clamp(48px, 6vw, 72px);
+}
+
+.santal-process-eyebrow {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.santal-process-title {
+  font-size: var(--t-santal-h2);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  max-width: 880px;
+  line-height: 1.15;
+}
+
+.santal-process-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.santal-process-card {
+  padding: clamp(32px, 4vw, 50px);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+}
+
+.santal-process-num {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.santal-process-name {
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.santal-process-desc {
+  font-size: 0.96rem;
+  color: var(--ink-secondary);
+  line-height: 1.68;
+}
+
+/* Santal Leadership & Company */
+.santal-team-header {
+  margin-bottom: clamp(44px, 5vw, 68px);
+}
+
+.santal-team-eyebrow {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.santal-team-statement {
+  font-size: clamp(1.6rem, 1.1rem + 1.8vw, 2.8rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  max-width: 900px;
+  line-height: 1.2;
+}
+
+.santal-team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.santal-member-cell {
+  padding: clamp(36px, 4vw, 54px) clamp(16px, 2.5vw, 32px);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+}
+
+.santal-member-cell:last-child {
+  border-right: none;
+}
+
+.santal-member-name {
+  font-size: 1.55rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.santal-member-role {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.santal-member-desc {
+  font-size: 0.94rem;
+  color: var(--ink-secondary);
+  line-height: 1.65;
+}
+
+/* Santal Minimal Footer */
+.santal-footer {
+  background-color: var(--ground-subtle);
+  border-top: 1px solid var(--line);
+  padding: clamp(64px, 7vw, 100px) 0 36px;
+  color: var(--ink-secondary);
+}
+
+.santal-footer-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1.3fr 1fr;
+  gap: clamp(32px, 4vw, 56px);
+  padding-bottom: clamp(48px, 6vw, 72px);
+  border-bottom: 1px solid var(--line);
+}
+
+.santal-footer-eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+
+.santal-footer-p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--ink-secondary);
+  margin-bottom: 16px;
+}
+
+.santal-footer-creed {
+  font-size: 1.1rem;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--accent);
+}
+
+.santal-footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.92rem;
+}
+
+.santal-footer-links a {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.santal-footer-links a:hover {
+  color: var(--accent);
+}
+
+.santal-footer-hours {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.santal-office-block {
+  margin-bottom: 16px;
+}
+
+.santal-office-city {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.santal-office-detail {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.santal-footer-standards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.86rem;
+  color: var(--ink-secondary);
+}
+
+.santal-footer-standards strong {
+  color: var(--ink);
+}
+
+.santal-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 28px;
+  font-size: 0.84rem;
+  color: var(--muted);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.santal-footer-nav {
+  display: flex;
+  gap: 24px;
+}
+
+.santal-footer-nav a:hover {
+  color: var(--ink);
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .santal-hero-subtitle-row,
+  .santal-services-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .santal-ledger-header,
+  .santal-ledger-row {
+    grid-template-columns: 60px 1.5fr 80px 60px;
+  }
+
+  .hide-tablet {
+    display: none;
+  }
+
+  .santal-cursor-preview {
+    display: none;
+  }
+
+  .santal-services-bigtitle {
+    position: static;
+  }
+
+  .santal-tenets-grid,
+  .santal-team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .santal-tenet-col,
+  .santal-member-cell {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .santal-footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .santal-nav {
+    display: none;
+  }
+
+  .santal-burger-btn {
+    display: flex;
+  }
+}
+
+@media (max-width: 768px) {
+  .santal-cornerstones-grid,
+  .santal-process-grid,
+  .santal-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .santal-cornerstone-cell,
+  .santal-process-card {
+    border-right: none;
+  }
+
+  .santal-ledger-header {
+    display: none;
+  }
+
+  .santal-ledger-row {
+    grid-template-columns: 40px 1fr 60px;
+    gap: 12px;
+  }
+
+  .santal-row-year {
+    display: none;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+
+  .santal-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
